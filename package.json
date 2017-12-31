@@ -1,0 +1,23 @@
+{
+  "name": "whosPlaying",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "babel index.js -o compiled.js"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-node6": "^11.0.0",
+    "babel-register": "^6.24.1"
+  },
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "fetch": "^1.1.0",
+    "node-fetch": "^1.7.3",
+    "whatwg-fetch": "^2.0.3"
+  }
+}
