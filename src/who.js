@@ -36,15 +36,29 @@ function renderGame(game) {
   const awayTeam = game.awayTeam;
   const homeTeam = game.homeTeam;
 
+  const compare = game.status.type == "STATUS_FINAL" ? final : vs;
+
   return [
     game.headline,
-    vs(awayTeam, homeTeam),
+    compare(awayTeam, homeTeam, game),
     spread(game.odds.spread, awayTeam, homeTeam)
   ].join('\n')
 }
 
-function vs(away, home) {
+function vs(away, home, _game) {
   return `${renderTeamWithRank(away)} vs. ${renderTeamWithRank(home)}`
+}
+
+function final(away, home, game) {
+  const winner = game.winner == 'home' ? home : away;
+
+  const awayScore = game.scores.away;
+  const homeScore = game.scores.home;
+
+  return [
+    maybeBold(`${renderTeamWithRank(away)} ${awayScore}, `, away === winner),
+    maybeBold(`${renderTeamWithRank(home)} ${homeScore}`,   home === winner),
+  ].join("")
 }
 
 function spread(spread, away, home) {
@@ -59,9 +73,9 @@ function spread(spread, away, home) {
 }
 
 function renderTeamWithRank(team) {
-  const rank = team.rank <= 25 ? `(${team.rank})` : ``;
+  const rank = team.rank <= 25 ? `(${team.rank}) ` : ``;
 
-  return `${renderTeam(team)} ${rank}`;
+  return `${rank}${renderTeam(team)}`;
 }
 
 function renderTeam(team) {
@@ -98,4 +112,8 @@ function getMonth(index) {
 
 function color(string, color) {
   return chalk.hex(color)(string);
+}
+
+function maybeBold(string, bool) {
+  return bool ? chalk.bold(string) : string;
 }
