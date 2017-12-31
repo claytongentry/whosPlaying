@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-const util = require('util');
-
 require("babel-register")
 require("../src/who.js")
   .who(process.argv.slice(2))
