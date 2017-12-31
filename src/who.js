@@ -74,10 +74,6 @@ function renderTeam(team) {
   return color(team.location, team.color);
 }
 
-async function render(data) {
-  return `${color(data.date, "#f66733")} dance`;
-}
-
 function getDate(date) {
   date        = new Date(`${date}T12:00:00.000Z`);
   const day   = ('0' + (date.getDate())).slice(-2)
