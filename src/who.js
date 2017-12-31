@@ -75,7 +75,11 @@ function renderTeam(team) {
 }
 
 function getDate(date) {
-  date        = new Date(`${date}T12:00:00.000Z`);
+  if (date) {
+    date = `${date}T12:00:00.000Z`;
+  } else {
+    date = new Date();
+  }
   const day   = ('0' + (date.getDate())).slice(-2)
   const month = ('0' + (date.getMonth() + 1)).slice(-2);
   const year  = date.getFullYear();
