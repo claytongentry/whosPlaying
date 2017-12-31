@@ -59,13 +59,7 @@ function spread(spread, away, home) {
 }
 
 function renderTeamWithRank(team) {
-  let rank = team.rank;
-
-  if (rank <= 25) {
-    rank = `(${rank})`;
-  } else {
-    rank = '';
-  }
+  const rank = team.rank <= 25 ? `(${team.rank})` : ``;
 
   return `${renderTeam(team)} ${rank}`;
 }
@@ -75,11 +69,8 @@ function renderTeam(team) {
 }
 
 function getDate(date) {
-  if (date) {
-    date = new Date(`${date}T12:00:00.000Z`);
-  } else {
-    date = new Date();
-  }
+  date = date ? new Date(`${date}T12:00:00.000Z`) : new Date();
+
   const day   = ('0' + (date.getDate())).slice(-2)
   const month = ('0' + (date.getMonth() + 1)).slice(-2);
   const year  = date.getFullYear();
