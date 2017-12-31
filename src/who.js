@@ -76,7 +76,7 @@ function renderTeam(team) {
 
 function getDate(date) {
   if (date) {
-    date = `${date}T12:00:00.000Z`;
+    date = new Date(`${date}T12:00:00.000Z`);
   } else {
     date = new Date();
   }
