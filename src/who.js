@@ -2,8 +2,8 @@
 
 import fetch from 'node-fetch';
 
-import { getDate, getMonth } from './dates';
-import { color, maybeBold }  from './helpers';
+import { getDate, getMonth, getTime } from './dates';
+import { color, maybeBold, safeJoin }  from './helpers';
 
 export async function who(args) {
   const prefix   = "https://cfb-scoreboard-api.herokuapp.com/v1";
@@ -15,11 +15,11 @@ export async function who(args) {
 }
 
 function renderGamesForDate(date, games) {
-  return [
+  return safeJoin([
     renderDate(date),
     '----------------------------',
     renderGames(games)
-  ].join("\n");
+  ], "\n");
 }
 
 function renderDate(date) {
@@ -31,20 +31,33 @@ function renderDate(date) {
 }
 
 function renderGames(games) {
-  return games.map((game) => renderGame(game)).join("\n\n");
+  return safeJoin(games.map((game) => renderGame(game)), "\n\n")
 }
 
 function renderGame(game) {
+
+  const time    = renderTime(game.date);
+
   const awayTeam = game.awayTeam;
   const homeTeam = game.homeTeam;
 
   const compare = game.status.type == "STATUS_FINAL" ? final : vs;
 
-  return [
+  return safeJoin([
+    time,
     game.headline,
     compare(awayTeam, homeTeam, game),
     spread(game.odds.spread, awayTeam, homeTeam)
-  ].join('\n')
+  ], "\n")
+}
+
+function renderTime(dateTime) {
+  const date    = new Date(dateTime);
+  const hours   = date.getHours();
+  const minutes = ('0' + date.getMinutes()).slice(-2);
+  const suffix  = hours < 12 ? 'am' : 'pm';
+
+  return `${(hours + 11) % 12 + 1}:${minutes} ${suffix}`;
 }
 
 function vs(away, home, _game) {

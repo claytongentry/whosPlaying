@@ -9,3 +9,7 @@ export function color(string, color) {
 export function maybeBold(string, bool) {
   return bool ? chalk.bold(string) : string;
 }
+
+export function safeJoin(array, element) {
+  return array.filter(n => n).join(element);
+}
