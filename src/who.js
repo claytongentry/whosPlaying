@@ -81,7 +81,7 @@ function spread(spread, away, home) {
   const favorite       = [ away, home ].find((team) => team.abbreviation == abbr)
 
   if (favorite) {
-    return `${renderTeam(favorite)} is favored by ${Math.round(-diff)} points.\n`;
+    return `${renderTeam(favorite)} is favored by ${Math.round(-diff)} points.`;
   } else {
     return ``;
   }
