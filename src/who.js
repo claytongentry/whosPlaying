@@ -3,7 +3,7 @@
 import fetch from 'node-fetch';
 
 import { getDate, getMonth, getTime } from './dates';
-import { color, maybeBold, safeJoin }  from './helpers';
+import { color, maybeBold, safeJoin } from './helpers';
 
 export async function who(args) {
   const prefix   = "https://cfb-scoreboard-api.herokuapp.com/v1";
@@ -35,16 +35,13 @@ function renderGames(games) {
 }
 
 function renderGame(game) {
-
-  const time    = renderTime(game.date);
-
   const awayTeam = game.awayTeam;
   const homeTeam = game.homeTeam;
 
   const compare = game.status.type == "STATUS_FINAL" ? final : vs;
 
   return safeJoin([
-    time,
+    renderTime(game.date),
     game.headline,
     compare(awayTeam, homeTeam, game),
     spread(game.odds.spread, awayTeam, homeTeam)
@@ -73,7 +70,7 @@ function final(away, home, game) {
   return [
     maybeBold(`${renderTeamWithRank(away)} ${awayScore}, `, away === winner),
     maybeBold(`${renderTeamWithRank(home)} ${homeScore}`,   home === winner),
-  ].join("")
+  ].join("");
 }
 
 function spread(spread, away, home) {
