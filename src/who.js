@@ -1,11 +1,13 @@
 'use strict';
 
-import chalk from 'chalk';
 import fetch from 'node-fetch';
 
+import { getDate, getMonth } from './dates';
+import { color, maybeBold }  from './helpers';
+
 export async function who(args) {
-  const prefix   = "https://cfb-scoreboard-api.herokuapp.com/v1"
-  const date     = getDate(args[0])
+  const prefix   = "https://cfb-scoreboard-api.herokuapp.com/v1";
+  const date     = getDate(args[0]);
   const response = await fetch(`${prefix}/date/${date}`);
   const data     = await response.json();
 
@@ -46,7 +48,7 @@ function renderGame(game) {
 }
 
 function vs(away, home, _game) {
-  return `${renderTeamWithRank(away)} vs. ${renderTeamWithRank(home)}`
+  return `${renderTeamWithRank(away)} vs. ${renderTeamWithRank(home)}`;
 }
 
 function final(away, home, game) {
@@ -80,40 +82,4 @@ function renderTeamWithRank(team) {
 
 function renderTeam(team) {
   return color(team.location, team.color);
-}
-
-function getDate(date) {
-  date = date ? new Date(`${date}T12:00:00.000Z`) : new Date();
-
-  const day   = ('0' + (date.getDate())).slice(-2)
-  const month = ('0' + (date.getMonth() + 1)).slice(-2);
-  const year  = date.getFullYear();
-
-  return `${year}${month}${day}`;
-}
-
-function getMonth(index) {
-  let month = []
-  month[1]  = "January";
-  month[2]  = "February";
-  month[3]  = "March";
-  month[4]  = "April";
-  month[5]  = "May";
-  month[6]  = "June";
-  month[7]  = "July";
-  month[8]  = "August";
-  month[9]  = "September";
-  month[10] = "October";
-  month[11] = "November";
-  month[12] = "December";
-
-  return month[index];
-}
-
-function color(string, color) {
-  return chalk.hex(color)(string);
-}
-
-function maybeBold(string, bool) {
-  return bool ? chalk.bold(string) : string;
 }

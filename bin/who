@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 require("babel-register")
-require("../src/who.js")
+require("../src/who")
   .who(process.argv.slice(2))
   .then(data => console.log(data))
   .catch(reason => console.error("Error: ", reason.message))
