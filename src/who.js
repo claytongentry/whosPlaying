@@ -2,7 +2,7 @@
 
 import fetch from 'node-fetch';
 
-import { getDate, getMonth, getTime } from './dates';
+import { getDate, getMonth }          from './dates';
 import { color, maybeBold, safeJoin } from './helpers';
 
 export async function who(args) {
